@@ -1,35 +1,76 @@
-# More information about the configuration file can be found here:
-# https://docs.aws.amazon.com/serverless-application-model/latest/developerguide/serverless-sam-cli-config.html
+# SAM CLI Configuration File
+
+# Version of the configuration file
 version = 0.1
 
+# Default profile
 [default]
-[default.global.parameters]
-stack_name = "SAM-Lambda-TypeScript"
 
-[default.build.parameters]
-cached = true
-parallel = true
+  # Global parameters
+  [default.global.parameters]
 
-[default.validate.parameters]
-lint = true
+    # Set the stack name for deployments
+    stack_name = "SAM-Lambda-TypeScript"
 
-[default.deploy.parameters]
-capabilities = "CAPABILITY_IAM"
-confirm_changeset = true
-resolve_s3 = true
-s3_prefix = "SAM-Lambda-TypeScript"
-region = "us-east-1"
-disable_rollback = true
-image_repositories = []
+  # Build parameters
+  [default.build.parameters]
 
-[default.package.parameters]
-resolve_s3 = true
+    # Enable caching of build artifacts
+    cached = true
 
-[default.sync.parameters]
-watch = true
+    # Enable parallel builds
+    parallel = true
 
-[default.local_start_api.parameters]
-warm_containers = "EAGER"
+  # Validate parameters
+  [default.validate.parameters]
 
-[default.local_start_lambda.parameters]
-warm_containers = "EAGER"
+    # Enable linting during validation
+    lint = true
+
+  # Deploy parameters
+  [default.deploy.parameters]
+
+    # Specify IAM capabilities needed for deployment
+    capabilities = "CAPABILITY_IAM"
+
+    # Confirm changeset creation during deployment
+    confirm_changeset = true
+
+    # Resolve S3 bucket names during deployment
+    resolve_s3 = true
+
+    # Specify the S3 prefix for deployment artifacts
+    s3_prefix = "SAM-Lambda-TypeScript"
+
+    # Specify the AWS region for deployment
+    region = "us-east-1"
+
+    # Disable rollback on deployment failure
+    disable_rollback = true
+
+    # Specify image repositories for containerized deployments
+    image_repositories = []
+
+  # Package parameters
+  [default.package.parameters]
+
+    # Resolve S3 bucket names during packaging
+    resolve_s3 = true
+
+  # Sync parameters
+  [default.sync.parameters]
+
+    # Enable watching for changes during synchronization
+    watch = true
+
+  # Local API start parameters
+  [default.local_start_api.parameters]
+
+    # Set the warm containers strategy for local API containers
+    warm_containers = "EAGER"
+
+  # Local Lambda start parameters
+  [default.local_start_lambda.parameters]
+
+    # Set the warm containers strategy for local Lambda containers
+    warm_containers = "EAGER"

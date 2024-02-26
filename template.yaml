@@ -1,42 +1,50 @@
+# AWS SAM Template for SAM-Lambda-TypeScript
 AWSTemplateFormatVersion: '2010-09-09'
 Transform: AWS::Serverless-2016-10-31
 Description: >
   SAM-Lambda-TypeScript
 
   Sample SAM Template for SAM-Lambda-TypeScript
-  
+
 # More info about Globals: https://github.com/awslabs/serverless-application-model/blob/master/docs/globals.rst
+# Define global settings that apply to all functions in the template
 Globals:
   Function:
-    Timeout: 3
+    Timeout: 3 # Set the timeout for all functions to 3 seconds
 
+# Define AWS resources used in the SAM application
 Resources:
+
+  # Define a Lambda function named RestApiSumFunc
   RestApiSumFunc:
-    Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
+    Type: AWS::Serverless::Function
     Properties:
-      CodeUri: src/
-      Handler: sumFunc.handler
-      Runtime: nodejs20.x
+      CodeUri: src/ # Location of the function code
+      Handler: sumFunc.handler # Entry point for the Lambda function
+      Runtime: nodejs20.x # Runtime environment for the Lambda function
       Architectures:
-        - x86_64
+        - x86_64 # Supported architectures for the Lambda function
       Events:
+        # Define an API Gateway event source for triggering the Lambda function
         sumFunc:
-          Type: Api # More info about API Event Source: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#api
+          Type: Api
           Properties:
-            Path: /sum
-            Method: post
-    
-    Metadata: # Manage esbuild properties
+            Path: /sum # API endpoint path
+            Method: post # HTTP method used to trigger the function
+
+    # Additional metadata for managing esbuild properties
+    Metadata:
       BuildMethod: esbuild
       BuildProperties:
-        Minify: true
-        Target: "es2020"
-        Sourcemap: true
-        EntryPoints: 
-        - sumFunc.ts
-  
+        Minify: true # Minify the code during build
+        Target: "es2020" # Target ECMAScript version
+        Sourcemap: true # Generate source maps
+        EntryPoints:
+          - sumFunc.ts # Entry point file for the Lambda function code
+
+  # Define another Lambda function named RestApiSubtractFunc
   RestApiSubtractFunc:
-    Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
+    Type: AWS::Serverless::Function
     Properties:
       CodeUri: src/
       Handler: subtractFunc.handler
@@ -45,17 +53,17 @@ Resources:
         - x86_64
       Events:
         subtractFunc:
-          Type: Api # More info about API Event Source: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#api
+          Type: Api
           Properties:
             Path: /sub
             Method: post
 
-    Metadata: # Manage esbuild properties
+    # Additional metadata for managing esbuild properties
+    Metadata:
       BuildMethod: esbuild
       BuildProperties:
         Minify: true
         Target: "es2020"
         Sourcemap: true
-        EntryPoints: 
-        - subtractFunc.ts
-        
+        EntryPoints:
+          - subtractFunc.ts

@@ -1,49 +1,64 @@
 import { Context, APIGatewayProxyResult, APIGatewayEvent } from "aws-lambda";
 
-const subtractNumbers = function (a: number, b: number): number {
-    return a - b;
+/**
+ * Lambda function handler for subtracting two numbers.
+ * @param event The API Gateway event object containing the request parameters.
+ * @param context The Lambda function execution context.
+ * @returns A Promise containing the API Gateway proxy result.
+ */
+export const handler = async (
+  event: APIGatewayEvent,
+  context: Context
+): Promise<APIGatewayProxyResult> => {
+  try {
+    // Check if the event body is present
+    if (!event.body) {
+      throw new Error("Missing event body");
+    }
+
+    // Attempt to parse the event body as JSON
+    let eventBody;
+    try {
+      eventBody = JSON.parse(event.body);
+    } catch (error) {
+      throw new Error("Invalid JSON in request body");
+    }
+
+    // Check if 'a' and 'b' are present in the event body
+    if (!eventBody.hasOwnProperty("a") || !eventBody.hasOwnProperty("b")) {
+      throw new Error("Missing 'a' or 'b' in event body");
+    }
+
+    // Subtract 'b' from 'a'
+    const result = subtractNumbers(eventBody.a, eventBody.b);
+
+    // Return the response
+    return {
+      statusCode: 200,
+      body: JSON.stringify({
+        message: `diff = ${result}`,
+        statusCode: 200,
+      }),
+    };
+  } catch (error) {
+    // Capture any error and return an error response
+    return {
+      statusCode: 400,
+      body: JSON.stringify({
+        message: `diff = NaN`,
+        error: error.message,
+        statusCode: 400,
+      }),
+    };
+  }
 };
 
-export const handler = async (event: APIGatewayEvent, context: Context): Promise<APIGatewayProxyResult> => {
-    try {
-        // Verifica si el cuerpo del evento está presente
-        if (!event.body) {
-            throw new Error("Missing event body");
-        }
-
-        // Intenta analizar el cuerpo del evento como JSON
-        let eventBody;
-        try {
-            eventBody = JSON.parse(event.body);
-        } catch (error) {
-            throw new Error("Invalid JSON in request body");
-        }
-
-        // Verifica si 'a' y 'b' están presentes en el cuerpo del evento
-        if (!eventBody.hasOwnProperty("a") || !eventBody.hasOwnProperty("b")) {
-            throw new Error("Missing 'a' or 'b' in event body");
-        }
-
-        // Realiza la suma de 'a' y 'b'
-        const result = subtractNumbers(eventBody.a, eventBody.b);
-
-        // Devuelve la respuesta
-        return {
-            statusCode: 200,
-            body: JSON.stringify({
-                message: `diff = ${result}`,
-                statusCode: 200
-            }),
-        };
-    } catch (error) {
-        // Captura cualquier error y devuelve una respuesta de error
-        return {
-            statusCode: 400,
-            body: JSON.stringify({
-                message: `diff = NaN`,
-                error: error.message,
-                statusCode: 400
-            }),
-        };
-    }
+/**
+ * Function to subtract two numbers.
+ * @param a The first number.
+ * @param b The second number.
+ * @returns The difference of the two numbers.
+ */
+const subtractNumbers = function (a: number, b: number): number {
+  return a - b;
 };
