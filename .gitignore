@@ -124,6 +124,12 @@ dist/
 # vuepress build output
 .vuepress/dist
 
+# Archivos de respaldo
+*~
+
+# Carpetas generadas por Jest
+coverage/
+
 # Serverless directories
 .serverless/
 
@@ -150,7 +156,8 @@ temp/
 .LSOverride
 
 # Icon must end with two \r
-Icon
+Icon
+
 
 # Thumbnails
 ._*
