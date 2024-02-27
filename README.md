@@ -2,6 +2,10 @@
 
 ## Description
 SAM-Lambda-TypeScript is a sample project demonstrating the use of AWS SAM (Serverless Application Model) with TypeScript for building serverless Lambda functions. It includes examples of Lambda functions for performing addition and subtraction operations via API Gateway endpoints.
+## Branches
+In this repository there are different branches where there are different implementations.
+- **master**: it is a simple implementation of two APIs where they execute simple arithmetic operations.
+- **Feature-DynamoDB**: This is a much more elaborate implementation that performs different operations on a DynamoDB database.
 
 ## Dependencies
 - **Node.js**: v14.x or higher
